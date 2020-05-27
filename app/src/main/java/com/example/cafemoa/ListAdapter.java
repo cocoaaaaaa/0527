@@ -26,23 +26,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
     class CustomViewHolder extends RecyclerView.ViewHolder {
         protected TextView name;
         protected TextView address;
-  /*  protected TextView businessHour;
-    protected TextView emptySeats;
-    protected TextView instargram;
-    protected TextView phone;
-    protected TextView inform;
-*/
+
 
         public CustomViewHolder(View view) {
             super(view);
             this.name = (TextView) view.findViewById(R.id.cafename);
             this.address = (TextView) view.findViewById(R.id.cafeaddress);
-       /* this.businessHour = (TextView) view.findViewById(R.id.cafehour);
-        this. emptySeats = (TextView) view.findViewById(R.id.cafeseats);
-        this.instargram = (TextView) view.findViewById(R.id.cafeinsta);
-        this.phone= (TextView) view.findViewById(R.id.cafephone);
-        this.inform = (TextView) view.findViewById(R.id.cafeinform);
-*/
+
         }
     }
 
@@ -58,15 +48,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.CustomViewHold
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-
         viewholder.name.setText(mList.get(position).getCafe_name());
         viewholder.address.setText(mList.get(position).getCafe_address());
-    /*    viewholder.businessHour.setText(mList.get(position).getCafe_businessHour());
-        viewholder.emptySeats.setText(mList.get(position).getCafe_emptySeats());
-        viewholder.instargram.setText(mList.get(position).getCafe_instargram());
-        viewholder.phone.setText(mList.get(position).getCafe_phone());
-        viewholder.inform.setText(mList.get(position).getCafe_inform());
-*/
+
 
     }
 

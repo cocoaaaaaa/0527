@@ -12,6 +12,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -24,10 +25,7 @@ import java.net.URL;
 public class SeatsActivity extends AppCompatActivity {
     String name;
     TextView mTextViewResult;
-    TextView seatsCount = null;
-    Button seatsUp = null;
-    Button seatsDown = null;
-    int count = 0;
+    EditText seatsCount;
     private AlertDialog dialog;
 
     private static String IP_ADDRESS = "203.237.179.120:7003";
@@ -40,6 +38,7 @@ public class SeatsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_seats);
 
         mTextViewResult = (TextView) findViewById(R.id.textView_result);
+        seatsCount = (EditText) findViewById(R.id.seatsCount);
 
         Intent intent = getIntent();
         name = intent.getExtras().getString("name");
@@ -56,7 +55,7 @@ public class SeatsActivity extends AppCompatActivity {
 
 
                 InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/Seats.php", name, Integer.toString(count));
+                task.execute("http://" + IP_ADDRESS + "/Seats.php", name, seatsCount.getText().toString());
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SeatsActivity.this);
                 dialog = builder.setMessage("좌석 수가 변경되었습니다.")
@@ -175,25 +174,24 @@ public class SeatsActivity extends AppCompatActivity {
         seatsUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer i = Integer.parseInt("" + seatsCount.getText());
-                i++;
-                seatsCount.setText("" + i);
+                Integer count = Integer.parseInt("" + seatsCount.getText());
+                count++;
+                seatsCount.setText("" + count);
             }
         });
         seatsDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer i = Integer.parseInt("" + seatsCount.getText());
-                i--;
-                seatsCount.setText("" + i);
+                Integer count = Integer.parseInt("" + seatsCount.getText());
+                count--;
+                seatsCount.setText("" + count);
             }
         });
 
         seatsinitial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count = 0;
-                seatsCount.setText("" + count);
+                seatsCount.setText("" + 0);
             }
         });
 

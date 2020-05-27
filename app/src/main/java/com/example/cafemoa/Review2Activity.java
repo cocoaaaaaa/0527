@@ -82,7 +82,8 @@ public class Review2Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent( Review2Activity.this, ReviewActivity.class );
-               ;
+                intent.putExtra("name", name);
+                intent.putExtra("loginID", loginID);
                 startActivity(intent);
             }
         });

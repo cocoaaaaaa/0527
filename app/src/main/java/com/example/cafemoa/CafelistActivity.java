@@ -6,15 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Bundle;
 
@@ -35,18 +30,10 @@ public class CafelistActivity extends AppCompatActivity {
     private static String IP_ADDRESS = "203.237.179.120:7003";
     private static String TAG = "phpcafelist";
 
-    private EditText mEditTextName;
-    private EditText mEditTextAddress;
-    private EditText mEditTextBusinesshour;
-    private EditText mEditTextEmptySeats;
-    private EditText mEditTextInstargram;
-    private EditText mEditTextPhone;
-    private EditText mEditTextInform;
     private TextView mTextViewResult;
     private ArrayList<ListData> mArrayList;
     private ListAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private EditText mEditTextSearchKeyword;
     private String mJsonString;
 
     @Override
@@ -180,11 +167,6 @@ public class CafelistActivity extends AppCompatActivity {
         String TAG_JSON="user";
         String TAG_NAME = "name";
         String TAG_address ="address";
-  /*     String TAG_businessHour ="businessHour";
-        String TAG_emptySeats ="emptySeats";
-        String TAG_instargram ="instargram";
-        String TAG_phone ="phone";
-        String TAG_inform ="inform";*/
 
 
 
@@ -199,33 +181,17 @@ public class CafelistActivity extends AppCompatActivity {
 
                 String name = item.getString(TAG_NAME);
                 String address = item.getString(TAG_address);
-            /*    String businessHour = item.getString(TAG_businessHour);
-                String emptySeats = item.getString(TAG_emptySeats);
-                String instargram = item.getString(TAG_instargram);
-                String phone = item.getString(TAG_phone);
-                String inform = item.getString(TAG_inform);
-*/
-
-
 
 
                 ListData ListData = new ListData();
 
                 ListData.setCafe_name(name);
                ListData.setCafe_address(address);
-        /*        InformData.setCafe_businessHour(businessHour);
-                InformData.setCafe_emptySeats(emptySeats);
-                InformData.setCafe_instargram(instargram);
-                InformData.setCafe_phone(phone);
-                InformData.setCafe_inform(inform);
-*/
-
 
 
                 mArrayList.add(ListData);
                 mAdapter.notifyDataSetChanged();
             }
-
 
 
         } catch (JSONException e) {

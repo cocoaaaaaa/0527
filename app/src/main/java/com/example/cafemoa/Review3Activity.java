@@ -7,18 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Bundle;
 
-import com.google.android.material.circularreveal.CircularRevealWidget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,30 +28,21 @@ import java.util.ArrayList;
 
 public class Review3Activity extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "203.237.179.120:7003";
-    private static String TAG = "phptest";
+    String name;
 
-    private EditText mEditTextName;
-    private EditText mEditTextAddress;
-    private EditText mEditTextBusinesshour;
-    private EditText mEditTextEmptySeats;
-    private EditText mEditTextInstargram;
-    private EditText mEditTextPhone;
-    private EditText mEditTextInform;
+    private static String IP_ADDRESS = "203.237.179.120:7003";
+    private static String TAG = "phpreviewdownload";
+
     private TextView mTextViewResult;
     private ArrayList<ReviewData> mArrayList;
     private ReviewAdapter mAdapter;
     private RecyclerView mRecyclerView;
-    private EditText mEditTextSearchKeyword;
     private String mJsonString;
-
-
-    String name;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review2);
+        setContentView(R.layout.activity_review3);
 
 
         Intent intent = getIntent();
@@ -84,7 +69,9 @@ public class Review3Activity extends AppCompatActivity {
 
 
         GetData task = new GetData();
-        task.execute( "http://" + IP_ADDRESS + "/ReviewDownload.php", "");
+        task.execute( "http://" + IP_ADDRESS + "/ReviewDownload.php", name);
+
+
     }
 
 
@@ -124,8 +111,9 @@ public class Review3Activity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String serverURL = params[0];
-            String postParameters = params[1];
+            String name = params[1];
 
+            String postParameters = "name=" + name;
 
             try {
 
@@ -192,11 +180,6 @@ public class Review3Activity extends AppCompatActivity {
         String TAG_userID ="userID";
         String TAG_title="title";
         String TAG_review="review";
-  /*     String TAG_businessHour ="businessHour";
-        String TAG_emptySeats ="emptySeats";
-        String TAG_instargram ="instargram";
-        String TAG_phone ="phone";
-        String TAG_inform ="inform";*/
 
 
 
@@ -213,14 +196,6 @@ public class Review3Activity extends AppCompatActivity {
                 String userID = item.getString(TAG_userID);
                 String title =item.getString(TAG_title);
                 String review =item.getString(TAG_review);
-            /*    String businessHour = item.getString(TAG_businessHour);
-                String emptySeats = item.getString(TAG_emptySeats);
-                String instargram = item.getString(TAG_instargram);
-                String phone = item.getString(TAG_phone);
-                String inform = item.getString(TAG_inform);
-*/
-
-
 
 
                 ReviewData ReviewData = new ReviewData();
@@ -229,13 +204,6 @@ public class Review3Activity extends AppCompatActivity {
                 ReviewData.setReview_userID(userID);
                 ReviewData.setReview_title(title);
                 ReviewData.setReview_review(review);
-        /*        InformData.setCafe_businessHour(businessHour);
-                InformData.setCafe_emptySeats(emptySeats);
-                InformData.setCafe_instargram(instargram);
-                InformData.setCafe_phone(phone);
-                InformData.setCafe_inform(inform);
-*/
-
 
 
                 mArrayList.add(ReviewData);
@@ -254,4 +222,3 @@ public class Review3Activity extends AppCompatActivity {
 
 
 }
-
