@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public InformAdapter(Activity context, ArrayList<InformData> list) {
 class CustomViewHolder extends RecyclerView.ViewHolder {
     protected TextView name;
     protected TextView address;
+
     protected TextView businessHour;
     protected TextView emptySeats;
     protected TextView instargram;
@@ -37,6 +39,7 @@ class CustomViewHolder extends RecyclerView.ViewHolder {
         super(view);
         this.name = (TextView) view.findViewById(R.id.cafename);
         this.address = (TextView) view.findViewById(R.id.cafeaddress);
+
         this.businessHour = (TextView) view.findViewById(R.id.cafehour);
         this. emptySeats = (TextView) view.findViewById(R.id.cafeseats);
         this.instargram = (TextView) view.findViewById(R.id.cafeinsta);

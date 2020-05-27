@@ -1,8 +1,10 @@
 package com.example.cafemoa;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,10 +28,10 @@ public class SeatsActivity extends AppCompatActivity {
     Button seatsUp = null;
     Button seatsDown = null;
     int count = 0;
+    private AlertDialog dialog;
 
     private static String IP_ADDRESS = "203.237.179.120:7003";
     private static String TAG = "phpseats";
-
 
 
     @Override
@@ -37,7 +39,7 @@ public class SeatsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seats);
 
-        mTextViewResult = (TextView)findViewById(R.id.textView_result);
+        mTextViewResult = (TextView) findViewById(R.id.textView_result);
 
         Intent intent = getIntent();
         name = intent.getExtras().getString("name");
@@ -47,8 +49,7 @@ public class SeatsActivity extends AppCompatActivity {
         mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
 
-
-        Button buttonInsert = (Button)findViewById(R.id.seatssave);
+        Button buttonInsert = (Button) findViewById(R.id.seatssave);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +58,20 @@ public class SeatsActivity extends AppCompatActivity {
                 InsertData task = new InsertData();
                 task.execute("http://" + IP_ADDRESS + "/Seats.php", name, Integer.toString(count));
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(SeatsActivity.this);
+                dialog = builder.setMessage("좌석 수가 변경되었습니다.")
+                        .setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
 
+                        .create();
+                dialog.show();
+
+
+                return;
 
             }
         });
@@ -88,12 +102,11 @@ public class SeatsActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            String name = (String)params[1];
-            String count = (String)params[2];
+            String name = (String) params[1];
+            String count = (String) params[2];
 
 
-
-            String serverURL = (String)params[0];
+            String serverURL = (String) params[0];
             String postParameters = "name=" + name + "&seats=" + count;
 
 
@@ -119,10 +132,9 @@ public class SeatsActivity extends AppCompatActivity {
                 Log.d(TAG, "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -133,7 +145,7 @@ public class SeatsActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
 
@@ -157,32 +169,33 @@ public class SeatsActivity extends AppCompatActivity {
     private void setup() {
         Button seatsUp = (Button) findViewById(R.id.seatsUp);
         Button seatsDown = (Button) findViewById(R.id.seatsDown);
-        Button seatsinitial =(Button)findViewById(R.id.seatsinitial);
+        Button seatsinitial = (Button) findViewById(R.id.seatsinitial);
         final TextView seatsCount = (TextView) findViewById(R.id.seatsCount);
 
         seatsUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
-                seatsCount.setText("" + count);
+                Integer i = Integer.parseInt("" + seatsCount.getText());
+                i++;
+                seatsCount.setText("" + i);
             }
         });
         seatsDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count--;
-                seatsCount.setText("" + count);
+                Integer i = Integer.parseInt("" + seatsCount.getText());
+                i--;
+                seatsCount.setText("" + i);
             }
         });
 
         seatsinitial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count=0;
+                count = 0;
                 seatsCount.setText("" + count);
             }
         });
+
     }
-
-
 }
